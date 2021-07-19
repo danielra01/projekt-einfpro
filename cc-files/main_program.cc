@@ -5,13 +5,14 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
+#include <math.h>
 #include "encrypt.h"
+#include "decrypt.h"
 #include "global.h"
 
-bool logging = false;
+bool logging = true;
 
 void encrypt() {
-    // TODO: Call function encrypt_text and create while loop for catching exceptions
     if (logging) {
         std::cout << "LOG: Starting encryption module..." << std::endl;
     }
@@ -22,7 +23,7 @@ void encrypt() {
         std::cout << e.what() << std::endl;
         encrypted = "";
     }
-    if (! (encrypted == "")) {  // TODO: Add for loop for a better format of output
+    if (! (encrypted == "")) {  // TODO: Add for loop for a better format of output (like decrypt one)
         std::cout << "\n\n\n############## Verschlüsselter Text ##############" << std::endl;
         std::cout << encrypted << std::endl;
         std::cout << "##################################################\n\n" << std::endl;
@@ -30,10 +31,40 @@ void encrypt() {
 }
 
 void decrypt() {
-    // TODO: Call function decrypt_text and create while loop for catching exceptions
     if (logging) {
         std::cout << "LOG: Starting decryption module..." << std::endl;
     }
+    std::cout << "\n\n\n\n";
+    std::cout << "Bitte den zu entschlüsselnden Text eigeben: ";
+    std::string text_for_decryption;
+    std::cin.ignore();
+    std::getline(std::cin, text_for_decryption);  // get line because of possible space character
+
+    std::string decrypted;
+    try {
+        decrypted = decrypt_text(text_for_decryption);
+    } catch(const std::exception &e) {
+        std::cout << e.what() << std::endl;
+        decrypted = "";
+    }
+
+    if (! (decrypted == "")) {
+        std::cout << "\n\n\n############################### Entschlüsselter Text ################################" << std::endl;
+        int number_of_lines = floor(decrypted.size() / 80);
+        for (int k = 1; k <= number_of_lines + 1; k++) {
+               std::string line = "# ";
+               for (int l = 0; l <= 80; l++) {
+                   if ((k-1)*80+l < decrypted.size()) {
+                       line = line + decrypted[(k-1)*80 + l];
+                   } else { // TODO: Add solution for moving # to the right in this case
+                       break;
+                   }
+               }
+            std::cout << line << " #" << std::endl;
+        }
+        std::cout << "######################################################################################\n\n" << std::endl;
+    }
+
 }
 
 void demonstration() {
