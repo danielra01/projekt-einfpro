@@ -6,34 +6,40 @@
 #include <string>
 #include <stdexcept>
 #include "encrypt.h"
+#include "global.h"
 
-bool logging = true;  // To enable logging
+bool logging = false;
 
 void encrypt() {
     // TODO: Call function encrypt_text and create while loop for catching exceptions
     if (logging) {
-        std::cout << "Starting encryption module..." << std::endl;
+        std::cout << "LOG: Starting encryption module..." << std::endl;
     }
+    std::string encrypted;
     try {
-        std::string encrypted;
         encrypted = encrypt_text();
-    } catch (const std::exception& e) {
+    } catch (const std::exception &e) {
         std::cout << e.what() << std::endl;
+        encrypted = "";
     }
-
+    if (! (encrypted == "")) {  // TODO: Add for loop for a better format of output
+        std::cout << "\n\n\n############## Verschlüsselter Text ##############" << std::endl;
+        std::cout << encrypted << std::endl;
+        std::cout << "##################################################\n\n" << std::endl;
+    }
 }
 
 void decrypt() {
     // TODO: Call function decrypt_text and create while loop for catching exceptions
     if (logging) {
-        std::cout << "Starting decryption module..." << std::endl;
+        std::cout << "LOG: Starting decryption module..." << std::endl;
     }
 }
 
 void demonstration() {
     // TODO: Add a demonstration case for presentation
     if (logging) {
-        std::cout << "Starting demo module..." << std::endl;
+        std::cout << "LOG: Starting demo module..." << std::endl;
     }
 }
 
@@ -59,7 +65,7 @@ int main() {
         }
     }
     if (logging) {
-        std::cout << "Exiting...!" << std::endl;
+        std::cout << "LOG: Exiting...!" << std::endl;
     }
 
     return 0;

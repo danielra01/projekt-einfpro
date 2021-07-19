@@ -6,6 +6,8 @@
 #include <string>
 #include <algorithm>
 #include <stdexcept>
+#include "global.h"
+
 
  std::string encrypt_text() {
 
@@ -23,18 +25,23 @@
     char new_A_char;
     std::cin >> new_A_char;
     if ((97 <= new_A_char) && (new_A_char <= 122)) {
-        std::cout << "a wird zu " << new_A_char << std::endl;
+        if (logging) {
+            std::cout << "LOG: a becomes " << new_A_char << std::endl;
+        }
     } else {
         throw std::invalid_argument( "FEHLER: Bitte hier nur Kleinbuchstaben eingeben!" );
     }
 
-    std::cout << "Starte Verschlüsselung..." << std::endl;
+    if (logging) {
+        std::cout << "LOG: Starting Encryption..." << std::endl;
+    }
     int new_A_ord = (int)new_A_char;
 
     // Convert to lower case string
     transform(mein_text.begin(), mein_text.end(), mein_text.begin(), ::tolower);
-    std::cout << "Konvertiere zu Kleinbuchstaben" << std::endl;
-    std::cout << mein_text << std::endl;
+    if (logging) {
+        std::cout << "LOG: Converted to lower case letters" << std::endl;
+    }
 
     // Start encryption of every character in the string by iterating over them
     // Calculate difference
