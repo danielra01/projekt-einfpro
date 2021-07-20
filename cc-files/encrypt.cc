@@ -41,7 +41,14 @@
     transform(mein_text.begin(), mein_text.end(), mein_text.begin(), ::tolower);
     if (logging) {
         std::cout << "LOG: Converted to lower case letters" << std::endl;
+        //std::cout << "Now removing all \"Umlaute\"" << std::endl;
     }
+
+    /*
+    std::string text_to_encrypt;
+    for (int i = 0; i < mein_text.size(); i++) {
+        std::cout << mein_text[i] << std::endl;
+    }*/
 
     // Start encryption of every character in the string by iterating over them
     // Calculate difference

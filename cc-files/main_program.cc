@@ -2,6 +2,7 @@
  * Please ALLWAYS execute this file and not the other functions directly
  */
 
+
 #include <iostream>
 #include <string>
 #include <stdexcept>
@@ -11,25 +12,31 @@
 #include "global.h"
 
 bool logging = true;
-const unsigned int cols = 80;  // Number of columns for the nice looking output
+const unsigned int cols = 160;  // Number of columns for the nice looking output set it to -1 to disable this feature
+// NOTE: This causes some trouble when used with ä,ü,ö and ß
 
 void format_for_print(std::string text) {
-    int number_of_lines = floor(text.size() / cols);
-    for (int k = 1; k <= number_of_lines + 1; k++) {
-        std::string line = "# ";
-        int counter = 0;
-        for (int l = 0; l < cols; l++) {
-            counter++;
-            if ((k-1)*cols+l < text.size()) {
-                line = line + text[(k-1)*cols + l];
-            } else {
-                for (int n = l; n < cols; n++) {
-                    line = line + " ";
+
+    if (cols > 0) {
+        int number_of_lines = floor(text.size() / cols);
+        for (int k = 1; k <= number_of_lines + 1; k++) {
+            std::string line = "# ";
+            int counter = 0;
+            for (int l = 0; l <= cols; l++) {
+                counter++;
+                if ((k-1)*cols+l < text.size()) {
+                    line = line + text[(k-1)*cols + l];
+                } else {
+                    for (int n = l; n <= cols; n++) {
+                        line = line + " ";
+                    }
+                    break;
                 }
-                break;
             }
+            std::cout << line <<  " #" << std::endl;
         }
-        std::cout << line << " #: "<< counter << std::endl;
+    } else {
+        std::cout << text << std::endl;
     }
 }
 
@@ -85,7 +92,6 @@ void demonstration() {
 }
 
 int main() {
-
     // Handle user choice
     bool running = true;
     while (running) {
@@ -101,6 +107,7 @@ int main() {
             // default: std::cout << "Please only enter one number to choose module!" << std::endl; break;
         }
     }
+    // Logging
     if (logging) {
         std::cout << "LOG: Exiting...!" << std::endl;
     }
