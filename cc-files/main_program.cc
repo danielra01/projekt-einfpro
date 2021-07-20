@@ -23,7 +23,7 @@ void format_for_print(std::string text) {
             if ((k-1)*cols+l < text.size()) {
                 line = line + text[(k-1)*cols + l];
             } else {
-                for (int n = l; n <= cols; n++) {
+                for (int n = l; n < cols; n++) {
                     line = line + " ";
                 }
                 break;
