@@ -11,7 +11,7 @@
 
  std::string encrypt_text() {
 
-    std::cout << "Bitte geben Sie einen zu verschlüsselnden Text ein: ";
+    std::cout << "Bitte geben Sie einen zu verschlüsselnden Text ein\n >> ";
     std::string mein_text;
     std::cin.ignore();
     getline(std::cin, mein_text);
@@ -21,10 +21,10 @@
         throw std::invalid_argument( "FEHLER: Bitte mindestens 26 Symbole eingeben!" );
     }
 
-    std::cout << "Bitte geben Sie die Verschlüsselung ein: a -> ";
+    std::cout << "Bitte geben Sie die Verschlüsselung ein: a -> \n [Kleinbuchtsaben] >> ";
     char new_A_char;
     std::cin >> new_A_char;
-    if ((97 <= new_A_char) && (new_A_char <= 122)) {
+    if ((97 <= (int)new_A_char) && ((int)new_A_char <= 122)) {
         if (logging) {
             std::cout << "LOG: a becomes " << new_A_char << std::endl;
         }
@@ -41,7 +41,14 @@
     transform(mein_text.begin(), mein_text.end(), mein_text.begin(), ::tolower);
     if (logging) {
         std::cout << "LOG: Converted to lower case letters" << std::endl;
+        //std::cout << "Now removing all \"Umlaute\"" << std::endl;
     }
+
+    /*
+    std::string text_to_encrypt;
+    for (int i = 0; i < mein_text.size(); i++) {
+        std::cout << mein_text[i] << std::endl;
+    }*/
 
     // Start encryption of every character in the string by iterating over them
     // Calculate difference
@@ -52,7 +59,7 @@
     // Loop over every letter in the string
     for (int i = 0; i < mein_text.length(); i++) {
         int ord_i = (int)mein_text[i];
-        if ((97 <= ord_i) && (ord_i <= 122)) {  // To only inlcude letters
+        if ((97 <= ord_i) && (ord_i <= 122)) {  // To only include letters
             ord_i = ((ord_i - 97) + diff) % 26;  // Convert to encrypted text
             ord_i = ord_i + 97;  // Shift back to ascii
         }

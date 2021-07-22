@@ -13,6 +13,9 @@
 std::string decrypt_text(std::string text_to_decrypt) {
     // Check for new e by looking for letter with highest occurrence
     // Therefore creating a PriorityQueue
+    if (text_to_decrypt.size() <= 1) {
+        throw std::invalid_argument( "FEHLER: Bitte einen längeren Text eingeben!" );
+    }
     std::priority_queue<std::pair<int, char>> char_queue;
     // Loop to every letter in the alphabet
     for (int i = 1; i <= 26; i++){

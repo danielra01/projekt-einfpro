@@ -2,6 +2,7 @@
  * Please ALLWAYS execute this file and not the other functions directly
  */
 
+
 #include <iostream>
 #include <string>
 #include <stdexcept>
@@ -10,9 +11,45 @@
 #include "decrypt.h"
 #include "global.h"
 
-bool logging = true;
+bool first_run = true;
+bool logging = false;
+const unsigned int cols = 106;  // Number of columns for the nice looking output set it to -1 to disable this feature
+// NOTE: This causes some trouble when used with ä,ü,ö and ß
+
+void clear_console() {
+    for (int x = 0; x < 100; x++) {
+        std::cout << "" << std::endl;
+    }
+}
+
+
+void format_for_print(std::string text) {
+    if (cols > 0) {
+        int number_of_lines = floor(text.size() / cols);
+        for (int k = 1; k <= number_of_lines + 1; k++) {
+            std::string line = "# ";
+            int counter = 0;
+            for (int l = 0; l <= cols; l++) {
+                counter++;
+                if ((k-1)*cols+l < text.size()) {
+                    line = line + text[(k-1)*cols + l];
+                } else {
+                    for (int n = l; n <= cols; n++) {
+                        line = line + " ";
+                    }
+                    break;
+                }
+            }
+            std::cout << line <<  " #" << std::endl;
+        }
+    } else {
+        std::cout << text << std::endl;
+    }
+}
+
 
 void encrypt() {
+    clear_console();
     if (logging) {
         std::cout << "LOG: Starting encryption module..." << std::endl;
     }
@@ -23,10 +60,11 @@ void encrypt() {
         std::cout << e.what() << std::endl;
         encrypted = "";
     }
-    if (! (encrypted == "")) {  // TODO: Add for loop for a better format of output (like decrypt one)
-        std::cout << "\n\n\n############## Verschlüsselter Text ##############" << std::endl;
-        std::cout << encrypted << std::endl;
-        std::cout << "##################################################\n\n" << std::endl;
+    if (! (encrypted == "")) {
+        clear_console();
+        std::cout << "\n\n\n############################################ Verschlüsselter Text #############################################" << std::endl;
+        format_for_print(encrypted);
+        std::cout << "###############################################################################################################\n" << std::endl;
     }
 }
 
@@ -34,8 +72,9 @@ void decrypt() {
     if (logging) {
         std::cout << "LOG: Starting decryption module..." << std::endl;
     }
+    clear_console();
     std::cout << "\n\n\n\n";
-    std::cout << "Bitte den zu entschlüsselnden Text eigeben: ";
+    std::cout << "Bitte den zu entschlüsselnden Text eigeben\n >> ";
     std::string text_for_decryption;
     std::cin.ignore();
     std::getline(std::cin, text_for_decryption);  // get line because of possible space character
@@ -49,22 +88,11 @@ void decrypt() {
     }
 
     if (! (decrypted == "")) {
-        std::cout << "\n\n\n############################### Entschlüsselter Text ################################" << std::endl;
-        int number_of_lines = floor(decrypted.size() / 80);
-        for (int k = 1; k <= number_of_lines + 1; k++) {
-               std::string line = "# ";
-               for (int l = 0; l <= 80; l++) {
-                   if ((k-1)*80+l < decrypted.size()) {
-                       line = line + decrypted[(k-1)*80 + l];
-                   } else { // TODO: Add solution for moving # to the right in this case
-                       break;
-                   }
-               }
-            std::cout << line << " #" << std::endl;
-        }
-        std::cout << "######################################################################################\n\n" << std::endl;
+        clear_console();
+        std::cout << "############################################ Entschlüsselter Text #############################################" << std::endl;
+        format_for_print(decrypted);
+        std::cout << "###############################################################################################################\n" << std::endl;
     }
-
 }
 
 void demonstration() {
@@ -74,19 +102,38 @@ void demonstration() {
     }
 }
 
-
-
 int main() {
-
-
     // Handle user choice
     bool running = true;
     while (running) {
-        std::cout << "Bitte ein Modul auswählen: \n1. Verschlüsseln    2. Entschlüsseln    3. Demo    4. Beenden:   ";
+        if (first_run) {
+            clear_console();
+            std::cout << "###############################################################################################################" << std::endl;
+            std::cout << "#    _____                                                                                                    #" << std::endl;
+            std::cout << "#   / ____|                                                                                                   #" << std::endl;
+            std::cout << "#  | |        __ _    ___   ___    __ _   _ __     ______                                                     #" << std::endl;
+            std::cout << "#  | |       / _` |  / _ \\ / __|  / _` | | '__|   |______|                                                    #" << std::endl;
+            std::cout << "#  | |____  | (_| | |  __/ \\__ \\ | (_| | | |                                                                  #" << std::endl;
+            std::cout << R"(#   \_____|  \__,_|  \___| |___/  \__,_| |_|                                                                  #)" << std::endl;
+            std::cout << "#                                                                                                             #" << std::endl;
+            std::cout << "#   __      __                             _       _   _   _                      _                           #" << std::endl;
+            std::cout << R"(#   \ \    / /                            | |     | | (_) (_)                    | |                          #)" << std::endl;
+            std::cout << R"(#    \ \  / /    ___   _ __   ___    ___  | |__   | |  _   _   ___   ___    ___  | |  _   _   _ __     __ _   #)" << std::endl;
+            std::cout << R"(#     \ \/ /    / _ \ | '__| / __|  / __| | '_ \  | | | | | | / __| / __|  / _ \ | | | | | | | '_ \   / _` |  #)" << std::endl;
+            std::cout << R"(#      \  /    |  __/ | |    \__ \ | (__  | | | | | | | |_| | \__ \ \__ \ |  __/ | | | |_| | | | | | | (_| |  #)" << std::endl;
+            std::cout << R"(#       \/      \___| |_|    |___/  \___| |_| |_| |_|  \__,_| |___/ |___/  \___| |_|  \__,_| |_| |_|  \__, |  #)" << std::endl;
+            std::cout << "#                                                                                                      __/ |  #" << std::endl;
+            std::cout << "#                                                                                                     |___/   #" << std::endl;
+            std::cout << "#                                                                                                             #" << std::endl;
+            std::cout << "#                                                            Copyright 2021 by Theresa Maurer & Daniel Rath   #" << std::endl;
+            first_run = false;
+        }
+
+        std::cout << "###############################################################################################################" << std::endl;
+        std::cout << "#\t\tBitte ein Modul auswählen:                                                                            #\n#\t\t1. Verschlüsseln\t\t\t2. Entschlüsseln\t\t\t3. Demonstration\t\t\t4. Beenden\t\t  #\n#  [1,2,3,4] >> ";
         int choice;
         std::cin >> choice;
         // TODO: Add check for choice being an integer here
-
         switch (choice) {
             case 1: encrypt(); break;
             case 2: decrypt(); break;
@@ -95,9 +142,9 @@ int main() {
             // default: std::cout << "Please only enter one number to choose module!" << std::endl; break;
         }
     }
+    // Logging
     if (logging) {
         std::cout << "LOG: Exiting...!" << std::endl;
     }
-
     return 0;
 }
