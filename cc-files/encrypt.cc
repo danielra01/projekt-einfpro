@@ -24,7 +24,7 @@
     std::cout << "Bitte geben Sie die Verschlüsselung ein: a -> \n [Kleinbuchtsaben] >> ";
     char new_A_char;
     std::cin >> new_A_char;
-    if ((97 <= new_A_char) && (new_A_char <= 122)) {
+    if ((97 <= (int)new_A_char) && ((int)new_A_char <= 122)) {
         if (logging) {
             std::cout << "LOG: a becomes " << new_A_char << std::endl;
         }
