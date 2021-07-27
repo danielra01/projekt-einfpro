@@ -90,14 +90,18 @@ Einführung in die Programmierung für Studierende der Naturwissenschaften\\[0mm
 
 \bigskip
 \subsection*{Verschlüsselung und Entschlüsselung}
-Die Caesar-Verschlüsselung ist eine einfache, monoalphabetische Verschlüsselung. Die Verschlüsselung der Buchstaben a-z entspricht einer Verschiebung des Alphabets:
+Die Caesar-Verschlüsselung ist eine einfache, monoalphabetische Verschlüsselung. Die Verschlüsselung der Buchstaben a-z entspricht einer Verschiebung des Alphabets um beliebig viele Stellen. Zwischen Groß- und Kleinbuchstaben wird nicht unterschieden.\\
+Beispielsweise wird bei einer Verschiebung um drei Buchstaben das a auf das D abgebildet, das b wird auf das E abgebildet, das c wird auf das F abgebildet, für die anderen Buchstaben wird diese Verfahrensweise analog weitergeführt. Nach der Systematik der Chiffrierung wird die Verschiebung nach dem Z beim A weitergeführt. Also wird das w auf das Z abgebildet und das x folglich auf das A.
 
 \begin{center}
 \includegraphics[width=520pt,height=60pt]{Beispiel c=3.png}
 \captionof{figure}{Beispiel für eine Caesar-Verschlüsselung mit Verschiebung um 3 Buchstaben}
 \end{center}
 
-Die Verschlüsselung lässt sich leichter darstellen, wenn jeder Buchstabe in seiner ASCII-Darstellung betrachtet wird. Jeder Buchstabe wird so als Zahl gestellt und die Verschiebung entspricht dann einer Addition.\\
+Die Verschlüsselung eines Textes lässt sich bei der Programmierung leichter umsetzen, wenn jeder Buchstabe in seiner ASCII-Darstellung betrachtet wird. Der Buchstabe wird als Zahl dargestellt, die Verschiebung entspricht einer Addition. Eine Verschiebung um drei Buchstaben entspricht einer Addition mit der Zahl 3.
+
+\newpage
+
 Jedem Buchstaben des Alphabets ist eine Zahl im ASCII-Code zugeordnet:
 
 \begin{center}
@@ -110,35 +114,34 @@ Ein Kleinbuchstabe x in ASCII-Darstellung kann nun durch eine additive Funktion
 \begin{equation*}
 C(x)=((x - 97) + c) \mod 26) +97
 \end{equation*}
-verschlüsselt werden, für ein $c \in \mathbb{Z}$. Das c entspricht der Verschiebung des Alphabets. \\
-Der verschlüsselte Buchstabe ist dann wieder eine Zahl zwischen 97 und 122 und somit auch ein Kleinbuchstabe.\\
-Die zugehörige Dechiffrierfunktion ist dann 
+verschlüsselt werden, für ein $c \in \mathbb{Z}$. Der verschlüsselte Buchstabe ist wieder eine Zahl zwischen 97-122 und somit auch ein Kleinbuchstabe. Das c bewirkt die Verschiebung des Alphabets.\\
+Die zugehörige Dechiffrierfunktion ist 
 \begin{equation*}
 D(x)=((x - 97) - c) \mod 26) +97,
 \end{equation*}
 da 
 \begin{equation*}
 \begin{aligned}
-D(C(x)) =  &((((x - 97) + c) \mod 26) +97 - 97) - c) \mod 26) +97 = \\
-		   &(((x - 97) + c) - c) \mod 26) +97 = \\
-		   &(((x - 97)\mod 26) +97 = x, \text{ für } 97 \leq x \leq 122
+D(C(x)) &= ((((x - 97) + c) \mod 26) +97 - 97) - c) \mod 26) +97 \\
+		   &= (((x - 97) + c) - c) \mod 26) +97 \\
+		   &= (((x - 97)\mod 26) +97 = x, \text{ für } 97 \leq x \leq 122
 \end{aligned}
 \end{equation*}
 \\
-Für ein $c$, das die Funktionen C(x) und D(x) eindeutig bestimmt, bewirkt jede Zahl $c'$ mit der Eigenschaft $c = c' \mod 26$ dieselbe Verschiebung des Alphabets. Daher gibt es für die Chiffrier-/Dechiffrierfunktion nur 26 verschiedene Möglichkeiten und Caesar-Verschlüssungen sind sehr einfach zu knacken.
+Für ein $c$, das die Funktionen C(x) und D(x) eindeutig bestimmt, bewirkt jede Zahl $c'$, mit der Eigenschaft $c = c' \mod 26$, dieselbe Verschiebung des Alphabets. Daher gibt es für die Chiffrier-/Dechiffrierfunktion nur 26 verschiedene Möglichkeiten. Folgend sind Caesar-Verschlüssungen sehr einfach zu knacken und stellen in der Anwendung keine sichere Chiffrierung da.
 
 \newpage
 \subsection*{Entschlüsselung eines Caesar-chiffrierten Textes durch Häufigkeitsanalyse}
 
-Um einen Caesar-verschlüsselten Text zu entschlüsseln, muss man die Dechiffrierfunktion D(x) finden und diese auf jeden Buchstaben anwenden. Dazu ist ausreichend, die Verschiebung c zu finden, da durch das c die Funktion D(x) eindeutig bestimmt wird. \\
-In der deutschen Sprache kommt das e eindeutig am häufigsten vor. Durch eine Häufigkeitsanalyse der Buchstaben des verschlüsselten Textes, lässt sich so der Buchstabe y (in Ascii-Darstellung), auf den das e abgebildet wurde, ermitteln. Es gilt $D(y) = ((y - 97) - c) \mod 26) +97 = 101$ und somit $c = y - 101$.\\
-Dabei ist zu Beachten, dass die Häufigkeitsanalyse nur bei ausreichend langen Texten funktioniert.
-
+Um einen Caesar-verschlüsselten Text zu entschlüsseln, muss die Dechiffrierfunktion D(x) gefunden werden und auf jeden Buchstaben angewendet werden. Dazu reicht aus, die Verschiebung c zu finden, da durch das c die Funktion D(x) eindeutig bestimmt wird. \\
+In der deutschen Sprache kommt das e eindeutig am häufigsten vor. Durch eine Häufigkeitsanalyse der Buchstaben des verschlüsselten Textes, lässt sich so der Buchstabe y (in Ascii-Darstellung), auf den das e abgebildet wurde, ermitteln. Es gilt $D(y) = ((y - 97) - c) \mod 26) +97 = 101$ und somit $c = y - 101$.
 
 \begin{center}
 \includegraphics[width=260pt,height=200pt]{buchstaben-haeufigkeit-deutsches-alphabet.jpg}
 \captionof{figure}{Häufigkeit der Buchstaben in der deutschen Sprache}
 \end{center}
+
+Dabei ist zu Beachten, dass die Häufigkeitsanalyse nur bei ausreichend langen Texten funktioniert. In unserem Programm benötigt der Text mindestens 25 Buchstaben.
 
 \newpage
 
