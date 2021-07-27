@@ -1,0 +1,176 @@
+\documentclass[ngerman,12pt]{article}
+
+% PACKAGES
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{a4}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{caption}
+
+% PAGE LAYOUT
+\setlength{\textwidth}{174mm}
+\setlength{\textheight}{220mm}
+\setlength{\topmargin}{10mm}
+\setlength{\oddsidemargin}{10mm}
+\setlength{\hoffset}{0mm}
+\setlength{\voffset}{0mm}
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{2mm}
+\pagestyle{plain}
+
+% EXERCISE SHEET SPECIFIC MAKROS
+\renewcommand{\title}[1]{\par\vspace{5mm}\centerline{\Large #1}}
+\newcommand{\subtitle}[1]{\par\vspace{1mm}\centerline{\footnotesize #1}\par}
+\newcommand{\exercise}[1]{\par\vspace{3mm}{\bf Aufgabe{\hspace{1mm}}#1}\hspace{1mm}}
+\definecolor{dark-gray}{gray}{0.40}
+\newcommand{\TODO}[1]{{\sf\color{blue} [#1]}}
+
+% GENERALLY USEFUL MATH MAKROS
+\def\ceil#1{{\left\lceil#1\right\rceil}}
+\def\floor#1{{\left\lfloor#1\right\rfloor}}
+\def\mod{\mbox{ mod }}
+\def\div{\mbox{ div }}
+\def\sm{\backslash}
+\def\IN{\mathbb{N}}
+\def\IZ{\mathbb{Z}}
+\def\IR{\mathbb{R}}
+\def\Oh#1{O\left(#1\right)}
+\def\Om#1{\Omega\left(#1\right)}
+\def\Th#1{\Theta\left(#1\right)}
+\def\eps{\varepsilon}
+
+\begin{document}
+
+% COLORS
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{darkred}{rgb}{0.7,0.0,0.0}
+
+% HEAD OF EXERCISE SHEETS
+\setlength{\textwidth}{16.5cm}
+\setlength{\textheight}{22cm}
+\setlength{\topmargin}{0cm}
+\setlength{\oddsidemargin}{-0.3cm}
+\setlength{\evensidemargin}{0cm}
+\vspace*{-20mm}
+
+% Links der Name des Lehrstuhls.
+\parbox{20mm}{
+~\\[0mm]
+~\\[0mm]
+~\\[-5mm]} %\\[0.3mm]
+% In der Mitte der Name der Veranstaltung.
+\parbox{120mm}{\vspace*{1mm}\begin{center}\large\bf%
+Einführung in die Programmierung für Studierende der Naturwissenschaften\\[0mm]
+\hspace{5mm} SS 2021\\[0mm]
+{\footnotesize\rm \url{https://aam.uni-freiburg.de/agdo/lehre/ss21/prog/index.html}}%
+\end{center}}
+\par\vspace{-5mm}
+% Grauer Strich und rechts das Uni-Logo.
+\definecolor{freiburg-gray}{rgb}{0.68,0.68,0.68}
+\vspace*{2mm}
+\raisebox{1.19cm}{%
+\textcolor{freiburg-gray}{\rule{0.885\textwidth}{1.1mm}}}
+\par\vspace*{-37.84mm}
+\hspace*{\fill}\includegraphics[width=74pt,height=107pt]{Uni_Logo.png}
+\par\vspace{-5mm}
+
+\bigskip
+
+\title{Codebreaker für Caesar-Verschlüsselung mit Häufigkeitsanalyse}
+\subtitle{von Daniel Rath und Theresa Maurer}
+\renewcommand{\baselinestretch}{1.1}\normalsize
+
+\bigskip
+\subsection*{Verschlüsselung und Entschlüsselung}
+Die Caesar-Verschlüsselung ist eine einfache, monoalphabetische Verschlüsselung. Die Verschlüsselung der Buchstaben a-z entspricht einer Verschiebung des Alphabets:
+
+\begin{center}
+\includegraphics[width=520pt,height=60pt]{Beispiel c=3.png}
+\captionof{figure}{Beispiel für eine Caesar-Verschlüsselung mit Verschiebung um 3 Buchstaben}
+\end{center}
+
+Die Verschlüsselung lässt sich leichter darstellen, wenn jeder Buchstabe in seiner ASCII-Darstellung betrachtet wird. Jeder Buchstabe wird so als Zahl gestellt und die Verschiebung entspricht dann einer Addition.\\
+Jedem Buchstaben des Alphabets ist eine Zahl im ASCII-Code zugeordnet:
+
+\begin{center}
+\includegraphics[width=400pt,height=160pt]{ascii.png}
+\captionof{figure}{Groß-/Kleinbuchstaben und Zahlen mit dem entsprechenden ASCII-Code}
+\end{center}
+
+Der Einfachheit halber beschränken wir uns hier auf die Kleinbuchstaben von a-z, also die ASCII-Zeichen 97-122.
+Ein Kleinbuchstabe x in ASCII-Darstellung kann nun durch eine additive Funktion 
+\begin{equation*}
+C(x)=((x - 97) + c) \mod 26) +97
+\end{equation*}
+verschlüsselt werden, für ein $c \in \mathbb{Z}$. Das c entspricht der Verschiebung des Alphabets. \\
+Der verschlüsselte Buchstabe ist dann wieder eine Zahl zwischen 97 und 122 und somit auch ein Kleinbuchstabe.\\
+Die zugehörige Dechiffrierfunktion ist dann 
+\begin{equation*}
+D(x)=((x - 97) - c) \mod 26) +97,
+\end{equation*}
+da 
+\begin{equation*}
+\begin{aligned}
+D(C(x)) =  &((((x - 97) + c) \mod 26) +97 - 97) - c) \mod 26) +97 = \\
+		   &(((x - 97) + c) - c) \mod 26) +97 = \\
+		   &(((x - 97)\mod 26) +97 = x, \text{ für } 97 \leq x \leq 122
+\end{aligned}
+\end{equation*}
+\\
+Für ein $c$, das die Funktionen C(x) und D(x) eindeutig bestimmt, bewirkt jede Zahl $c'$ mit der Eigenschaft $c = c' \mod 26$ dieselbe Verschiebung des Alphabets. Daher gibt es für die Chiffrier-/Dechiffrierfunktion nur 26 verschiedene Möglichkeiten und Caesar-Verschlüssungen sind sehr einfach zu knacken.
+
+\newpage
+\subsection*{Entschlüsselung eines Caesar-chiffrierten Textes durch Häufigkeitsanalyse}
+
+Um einen Caesar-verschlüsselten Text zu entschlüsseln, muss man die Dechiffrierfunktion D(x) finden und diese auf jeden Buchstaben anwenden. Dazu ist ausreichend, die Verschiebung c zu finden, da durch das c die Funktion D(x) eindeutig bestimmt wird. \\
+In der deutschen Sprache kommt das e eindeutig am häufigsten vor. Durch eine Häufigkeitsanalyse der Buchstaben des verschlüsselten Textes, lässt sich so der Buchstabe y (in Ascii-Darstellung), auf den das e abgebildet wurde, ermitteln. Es gilt $D(y) = ((y - 97) - c) \mod 26) +97 = 101$ und somit $c = y - 101$.\\
+Dabei ist zu Beachten, dass die Häufigkeitsanalyse nur bei ausreichend langen Texten funktioniert.
+
+
+\begin{center}
+\includegraphics[width=260pt,height=200pt]{buchstaben-haeufigkeit-deutsches-alphabet.jpg}
+\captionof{figure}{Häufigkeit der Buchstaben in der deutschen Sprache}
+\end{center}
+
+\newpage
+
+\subsection*{C++-Programm zur Ent-/Verschlüsselung}
+
+\subsubsection*{Die Verschlüsselungsfunktion: encrypt\_text()}
+
+Die Funktion fordert als erstes die Eingabe eines zu verschlüsselnden Textes, wobei der eingegebene Text mindestens 25 Zeichen enthalten muss, damit sich der Text auch wieder mit einer Häufigkeitsanalyse entschlüsseln lässt. Dann muss noch der Kleinbuchstabe eingegeben werden, auf den das a bei der Verschlüsselung abgebildet werden soll, um die Differenz c zu bestimmen. \\
+Anschließend werden alle Großbuchstaben des Textes in Kleinbuchstaben umgewandelt. Dann wird über den ganzen Text iteriert und auf jeden Buchstaben die Verschlüsselungsfunktion C(x) angewandt, wobei Sonderzeichen nicht verschlüsselt werden, sondern einfach an der richtigen Stelle im Text wieder eingefügt werden. \\
+Der verschlüsselte Text wird dann als string zurückgegeben.
+
+
+\subsubsection*{Die Entschlüsselungsfunktion: decrypt\_text()}
+
+Die Funktion nimmt einen Caesar-verschlüsselten Text als Eingabe, der mindestens die Länge 2 hat (und keine Großbuchstaben enthält). Dann wird die Häufigkeit jedes Buchstaben im Text gezählt und in eine Priority Queue eingefügt, wobei der key die absolute Häufigkeit als integer ist und der value der entsprechende Buchstabe.\\
+Der am häufigsten verwendete Buchstabe im verschlüsselten Text entspricht dann dem value des obersten Elements in der Priority Queue und kann einfach ausgelesen werden. Daraus kann die Differenz c wie oben beschrieben berechnet werden und anschließend die Funktion D(x) auf den gesamten Text angewendet werden.\\
+Am Ende werden die ersten zwanzig Buchstaben des entschlüsselten Textes ausgegeben und überprüft, ob das wirklich der entschlüsselte Text ist.
+Falls nicht, wird angenommen, dass der nächst häufigste Buchstabe das e war und der Text wird damit entschlüsselt. Das wird dreimal wiederholt, wenn dann kein richtiger Text gefunden wurde, kann angenommen werden, dass der eingegebene Text gar nicht Caesar-verschlüsselt war.\\
+Entsprechen die ersten zwanzig Buchstaben einem korrekten Text, wird der ganze entschlüsselte Text als string zurückgegeben.
+
+
+\subsubsection*{main\_program()}
+
+
+\newpage
+\subsection*{Quellen:}
+
+23.06.21, Beispiel c=3: \\
+\url{https://www.ionos.de/digitalguide/fileadmin/DigitalGuide/Screenshots/caesar-verschluesselung.png}\\
+27.07.21, Ascii Alphabet: \\
+\url{https://www.braingle.com/brainteasers/codes/images/ascii.png}\\
+23.06.21, Tabelle: \\
+\url{https://www.seo-woman.de/bilder/2012/buchstaben-haeufigkeit-deutsches-alphabet.jpg}\\
+ 
+\end{document} 
