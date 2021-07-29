@@ -141,30 +141,39 @@ In der deutschen Sprache kommt das e eindeutig am häufigsten vor. Durch eine H�
 \captionof{figure}{Häufigkeit der Buchstaben in der deutschen Sprache}
 \end{center}
 
-Dabei ist zu Beachten, dass die Häufigkeitsanalyse nur bei ausreichend langen Texten funktioniert. In unserem Programm benötigt der Text mindestens 25 Buchstaben.
+Dabei ist zu Beachten, dass die Häufigkeitsanalyse nur bei ausreichend langen Texten funktioniert. In unserem Programm benötigt der Text mindestens 26 Buchstaben.
 
 \newpage
 
 \subsection*{C++-Programm zur Ent-/Verschlüsselung}
 
-\subsubsection*{Die Verschlüsselungsfunktion: encrypt\_text()}
+\subsubsection*{Die Verschlüsselungsfunktion: encrypt\_text() in der Datei encrypt.cc}
 
-Die Funktion fordert als erstes die Eingabe eines zu verschlüsselnden Textes, wobei der eingegebene Text mindestens 25 Zeichen enthalten muss, damit sich der Text auch wieder mit einer Häufigkeitsanalyse entschlüsseln lässt. Dann muss noch der Kleinbuchstabe eingegeben werden, auf den das a bei der Verschlüsselung abgebildet werden soll, um die Differenz c zu bestimmen. \\
+Die Funktion nimmt als Argument einen zu verschlüsselnden Text, wobei der eingegebene Text mindestens 25 Zeichen enthalten muss, damit sich der Text auch wieder mit einer Häufigkeitsanalyse entschlüsseln lässt. Dann muss noch der Kleinbuchstabe eingegeben werden, auf den das a bei der Verschlüsselung abgebildet werden soll, um die Differenz c zu bestimmen. \\
 Anschließend werden alle Großbuchstaben des Textes in Kleinbuchstaben umgewandelt. Dann wird über den ganzen Text iteriert und auf jeden Buchstaben die Verschlüsselungsfunktion C(x) angewandt, wobei Sonderzeichen nicht verschlüsselt werden, sondern einfach an der richtigen Stelle im Text wieder eingefügt werden. \\
 Der verschlüsselte Text wird dann als string zurückgegeben.
 
 
-\subsubsection*{Die Entschlüsselungsfunktion: decrypt\_text()}
+\subsubsection*{Die Entschlüsselungsfunktion: decrypt\_text() in der Datei decrypt.cc}
 
-Die Funktion nimmt einen Caesar-verschlüsselten Text als Eingabe, der mindestens die Länge 2 hat (und keine Großbuchstaben enthält). Dann wird die Häufigkeit jedes Buchstaben im Text gezählt und in eine Priority Queue eingefügt, wobei der key die absolute Häufigkeit als integer ist und der value der entsprechende Buchstabe.\\
+Die Funktion nimmt einen Caesar-verschlüsselten Text als Eingabe, der mindestens die Länge 26 hat. Dann wird die Häufigkeit jedes Buchstaben im Text gezählt und in eine Priority Queue eingefügt, wobei der key die absolute Häufigkeit als integer ist und der value der entsprechende Buchstabe.\\
 Der am häufigsten verwendete Buchstabe im verschlüsselten Text entspricht dann dem value des obersten Elements in der Priority Queue und kann einfach ausgelesen werden. Daraus kann die Differenz c wie oben beschrieben berechnet werden und anschließend die Funktion D(x) auf den gesamten Text angewendet werden.\\
-Am Ende werden die ersten zwanzig Buchstaben des entschlüsselten Textes ausgegeben und überprüft, ob das wirklich der entschlüsselte Text ist.
+Am Ende werden die ersten 30 Buchstaben des entschlüsselten Textes ausgegeben und überprüft, ob das wirklich der entschlüsselte Text ist.
 Falls nicht, wird angenommen, dass der nächst häufigste Buchstabe das e war und der Text wird damit entschlüsselt. Das wird dreimal wiederholt, wenn dann kein richtiger Text gefunden wurde, kann angenommen werden, dass der eingegebene Text gar nicht Caesar-verschlüsselt war.\\
-Entsprechen die ersten zwanzig Buchstaben einem korrekten Text, wird der ganze entschlüsselte Text als string zurückgegeben.
+Entsprechen die ersten 30 Buchstaben einem korrekten Text, wird der ganze entschlüsselte Text als string zurückgegeben.
 
+\subsubsection*{demonstration.cc}
 
-\subsubsection*{main\_program()}
+Die Funktion demo\_module nimmt einen Text als Eingabe und zeigt einmal die Verschlüsselung und Entschlüsselung. Die Funktion dient nur zur einfacheren Präsentation des Programms.\\
+Auf den Text wird einmal die Funktion encrypt\_text angewendet und der verschlüsselte Text ausgegeben. Dann wird auf den verschlüsselten Text die Entschlüsselungsfunktion decrypt\_text angewendet und der Text wieder ausgegeben.
 
+\subsubsection*{format\_print.cc}
+
+Durch die Funktion format\_for\_print kann die Ausgabe von Texten schöner dargestellt werden.
+
+\subsubsection*{main\_program.cc}
+
+Das main\_programm ist als einzige Datei zur Ausführung gedacht. Beim Ausführen wird abgefragt, welche der vier Optionen Verschlüsseln, Entschlüsseln eines Textes, Demonstration der Funktionen oder Beenden des Programms gewählt werden soll. 
 
 \newpage
 \subsection*{Quellen:}
