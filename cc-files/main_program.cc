@@ -10,6 +10,7 @@
 #include "encrypt.h"
 #include "decrypt.h"
 #include "global.h"
+#include "demonstration.h"
 
 bool first_run = true;
 bool logging = false;
@@ -50,12 +51,18 @@ void format_for_print(std::string text) {
 
 void encrypt() {
     clear_console();
+    std::cout << "Bitte geben Sie einen zu verschlüsselnden Text ein\n >> ";
+    //Todo: Check for length
+    std::string mein_text;
+    std::cin.ignore();
+    getline(std::cin, mein_text);
+
     if (logging) {
         std::cout << "LOG: Starting encryption module..." << std::endl;
     }
     std::string encrypted;
     try {
-        encrypted = encrypt_text();
+        encrypted = encrypt_text(mein_text);
     } catch (const std::exception &e) {
         std::cout << e.what() << std::endl;
         encrypted = "";
@@ -96,7 +103,8 @@ void decrypt() {
 }
 
 void demonstration() {
-    // TODO: Add a demonstration case for presentation
+    clear_console();
+    demo_module();
     if (logging) {
         std::cout << "LOG: Starting demo module..." << std::endl;
     }
@@ -130,7 +138,7 @@ int main() {
         }
 
         std::cout << "###############################################################################################################" << std::endl;
-        std::cout << "#\t\tBitte ein Modul auswählen:                                                                            #\n#\t\t1. Verschlüsseln\t\t\t2. Entschlüsseln\t\t\t3. Demonstration\t\t\t4. Beenden\t\t  #\n#  [1,2,3,4] >> ";
+        std::cout << "#      Bitte ein Modul auswählen:                                                                             #\n#       1. Verschlüsseln             2. Entschlüsseln            3. Demonstration            4. Beenden       #\n#  [1,2,3,4] >> ";
         int choice;
         std::cin >> choice;
         // TODO: Add check for choice being an integer here
@@ -139,7 +147,6 @@ int main() {
             case 2: decrypt(); break;
             case 3: demonstration(); break;
             case 4: running = false; break;
-            // default: std::cout << "Please only enter one number to choose module!" << std::endl; break;
         }
     }
     // Logging
