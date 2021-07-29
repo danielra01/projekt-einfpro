@@ -10,10 +10,20 @@
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{verbatim}
 \usepackage{graphicx}
-\usepackage[hidelinks]{hyperref}
+\usepackage[colorlinks=true]{hyperref}
+\hypersetup{urlcolor=blue,
+			linkcolor=blue,
+			citecolor=blue}
 \usepackage{listings}
 \usepackage{booktabs}
 \usepackage{caption}
+\usepackage[babel, german=quotes]{csquotes}
+\usepackage[backend = biber,style = alphabetic]{biblatex}
+\addbibresource{literatur.bib}
+\setlength{\bibitemsep}{1em}
+\usepackage{multirow}
+
+
 
 % PAGE LAYOUT
 \setlength{\textwidth}{174mm}
@@ -32,6 +42,7 @@
 \newcommand{\exercise}[1]{\par\vspace{3mm}{\bf Aufgabe{\hspace{1mm}}#1}\hspace{1mm}}
 \definecolor{dark-gray}{gray}{0.40}
 \newcommand{\TODO}[1]{{\sf\color{blue} [#1]}}
+\usepackage{lmodern}
 
 % GENERALLY USEFUL MATH MAKROS
 \def\ceil#1{{\left\lceil#1\right\rceil}}
@@ -90,24 +101,63 @@ Einführung in die Programmierung für Studierende der Naturwissenschaften\\[0mm
 
 \bigskip
 \subsection*{Verschlüsselung und Entschlüsselung}
-Die Caesar-Verschlüsselung ist eine einfache, monoalphabetische Verschlüsselung. Die Verschlüsselung der Buchstaben a-z entspricht einer Verschiebung des Alphabets um beliebig viele Stellen. Zwischen Groß- und Kleinbuchstaben wird nicht unterschieden.\\
-Beispielsweise wird bei einer Verschiebung um drei Buchstaben das a auf das D abgebildet, das b wird auf das E abgebildet, das c wird auf das F abgebildet, für die anderen Buchstaben wird diese Verfahrensweise analog weitergeführt. Nach der Systematik der Chiffrierung wird die Verschiebung nach dem Z beim A weitergeführt. Also wird das w auf das Z abgebildet und das x folglich auf das A.
+Die Caesar-Verschlüsselung ist eine einfache, monoalphabetische Verschlüsselung. Die Verschlüssel- ung der Buchstaben a - z entspricht einer Verschiebung des Alphabets um beliebig viele Stellen. Zwischen Groß- und Kleinbuchstaben wird nicht unterschieden.\cite{Beutelspacher2007}\\ 
+Beispielsweise wird bei einer Verschiebung um drei Buchstaben das a auf das d abgebildet, das b wird auf das e abgebildet, das c wird auf das f abgebildet, für die anderen Buchstaben wird diese Verfahrensweise analog weitergeführt. Nach der Systematik der Chiffrierung wird die Verschiebung nach dem z beim a weitergeführt. Also wird das w auf das z abgebildet und das x folglich auf das a.
 
-\begin{center}
-\includegraphics[width=520pt,height=60pt]{Beispiel c=3.png}
-\captionof{figure}{Beispiel für eine Caesar-Verschlüsselung mit Verschiebung um 3 Buchstaben}
-\end{center}
+\begin{table}[ht]
+\centering
+\label{table:bspaisd}
+\begin{tabular}{*{23}{|c}|}
+	\hline
+	\textbf{Klartext:} & a & b & c & d & e & f & \dots & l & m & n & o & p & q & r & s & t & u & v & w & x & y & z \\
+	\hline
+	\textbf{Chiffre:} & d & e & f & g & h & i & \dots & o & p & q & r & s & t & u & v & w & x & y & z & a & b & c \\
+	\hline
+	
+\end{tabular}
+%\includegraphics[width=520pt,height=60pt]{Beispiel c=3.png}
+\captionof{table}{Beispiel für eine Caesar-Verschlüsselung mit Verschiebung um 3 Buchstaben}
+\end{table}
 
-Die Verschlüsselung eines Textes lässt sich bei der Programmierung leichter umsetzen, wenn jeder Buchstabe in seiner ASCII-Darstellung betrachtet wird. Der Buchstabe wird als Zahl dargestellt, die Verschiebung entspricht einer Addition. Eine Verschiebung um drei Buchstaben entspricht einer Addition mit der Zahl 3.
+Die Verschlüsselung eines Textes lässt sich bei der Programmierung leichter umsetzen, wenn jeder Buchstabe in seiner ASCII-Darstellung betrachtet wird. Das heißt jeder Buchstabe wird als Zahl dargestellt, die Verschiebung entspricht einer Addition. Eine Verschiebung um drei Buchstaben entspricht einer Addition mit der Zahl 3.
 
 \newpage
 
 Jedem Buchstaben des Alphabets ist eine Zahl im ASCII-Code zugeordnet:
 
-\begin{center}
-\includegraphics[width=400pt,height=160pt]{ascii.png}
-\captionof{figure}{Groß-/Kleinbuchstaben und Zahlen mit dem entsprechenden ASCII-Code}
-\end{center}
+\begin{table}[ht]
+	\label{table:asciimaping}
+	\centering
+	\begin{tabular}{|r|c|r|c|r|c|}
+		\hline
+		\textbf{Buchstabe} & \textbf{ASCII} & \textbf{Buchstabe} & \textbf{ASCII} & \textbf{Zahl} & \textbf{ASCII}\\
+		\hline
+		A & 65 & a & 97 & 0 & 48\\
+		\hline
+		B & 66 & b & 98 & 1 & 49\\
+		\hline
+		C & 67 & c & 99 & 2 & 50\\
+		\hline
+		\multirow{3}{*}{\vdots} & \multirow{3}{*}{\vdots} & \multirow{3}{*}{\vdots} & \multirow{3}{*}{\vdots} &  \multirow{3}{*}{\vdots} & \multirow{3}{*}{\vdots}\\
+		& & & & & \\
+		& & & & & \\
+		\hline
+		J & 74 & j & 106 & 9 & 57\\
+		\hline
+		\multirow{3}{*}{\vdots} & \multirow{3}{*}{\vdots} & \multirow{3}{*}{\vdots} & \multirow{3}{*}{\vdots} &  & \\
+		& & & & & \\
+		& & & & & \\
+		\hline
+		X & 88 & x & 120 & &\\
+		\hline
+		Y & 89 & y & 121 & &\\
+		\hline
+		Z & 90 & z & 122 & &\\
+		\hline
+		
+	\end{tabular}
+\captionof{table}{Groß-/Kleinbuchstaben und Zahlen mit dem entsprechenden ASCII-Code \cite{Roitzsch1993}}
+\end{table}
 
 Der Einfachheit halber beschränken wir uns hier auf die Kleinbuchstaben von a-z, also die ASCII-Zeichen 97-122.
 Ein Kleinbuchstabe x in ASCII-Darstellung kann nun durch eine additive Funktion 
@@ -117,9 +167,9 @@ C(x)=((x - 97) + c) \mod 26) +97
 verschlüsselt werden, für ein $c \in \mathbb{Z}$. Der verschlüsselte Buchstabe ist wieder eine Zahl zwischen 97-122 und somit auch ein Kleinbuchstabe. Das c bewirkt die Verschiebung des Alphabets.\\
 Die zugehörige Dechiffrierfunktion ist 
 \begin{equation*}
-D(x)=((x - 97) - c) \mod 26) +97,
+D(x)=((x - 97) - c) \mod 26) +97´
 \end{equation*}
-da 
+da gilt 
 \begin{equation*}
 \begin{aligned}
 D(C(x)) &= ((((x - 97) + c) \mod 26) +97 - 97) - c) \mod 26) +97 \\
@@ -128,7 +178,7 @@ D(C(x)) &= ((((x - 97) + c) \mod 26) +97 - 97) - c) \mod 26) +97 \\
 \end{aligned}
 \end{equation*}
 \\
-Für ein $c$, das die Funktionen C(x) und D(x) eindeutig bestimmt, bewirkt jede Zahl $c'$, mit der Eigenschaft $c = c' \mod 26$, dieselbe Verschiebung des Alphabets. Daher gibt es für die Chiffrier-/Dechiffrierfunktion nur 26 verschiedene Möglichkeiten. Folgend sind Caesar-Verschlüssungen sehr einfach zu knacken und stellen in der Anwendung keine sichere Chiffrierung da.
+Für ein $c$, das die Funktionen C(x) und D(x) eindeutig bestimmt, bewirkt jede Zahl $c'$, mit der Eigenschaft $c = c' \mod 26$, dieselbe Verschiebung des Alphabets. Daher gibt es für die Chiffrier-/Dechiffrierfunktion nur 26 verschiedene Möglichkeiten. Somit sind Caesar-Verschlüssungen sehr einfach zu knacken und stellen in der Anwendung keine sichere Chiffrierung da. \cite{Olligs2003}
 
 \newpage
 \subsection*{Entschlüsselung eines Caesar-chiffrierten Textes durch Häufigkeitsanalyse}
@@ -136,12 +186,44 @@ Für ein $c$, das die Funktionen C(x) und D(x) eindeutig bestimmt, bewirkt jede 
 Um einen Caesar-verschlüsselten Text zu entschlüsseln, muss die Dechiffrierfunktion D(x) gefunden werden und auf jeden Buchstaben angewendet werden. Dazu reicht aus, die Verschiebung c zu finden, da durch das c die Funktion D(x) eindeutig bestimmt wird. \\
 In der deutschen Sprache kommt das e eindeutig am häufigsten vor. Durch eine Häufigkeitsanalyse der Buchstaben des verschlüsselten Textes, lässt sich so der Buchstabe y (in Ascii-Darstellung), auf den das e abgebildet wurde, ermitteln. Es gilt $D(y) = ((y - 97) - c) \mod 26) +97 = 101$ und somit $c = y - 101$.
 
-\begin{center}
-\includegraphics[width=260pt,height=200pt]{buchstaben-haeufigkeit-deutsches-alphabet.jpg}
-\captionof{figure}{Häufigkeit der Buchstaben in der deutschen Sprache}
-\end{center}
-
-Dabei ist zu Beachten, dass die Häufigkeitsanalyse nur bei ausreichend langen Texten funktioniert. In unserem Programm benötigt der Text mindestens 26 Buchstaben.
+\begin{table}[ht]
+	\centering
+	\label{table:hfverteilung}
+\begin{tabular}{*{4}{|c}|}
+	\hline
+	\textbf{Buchstabe} & \textbf{Häufigkeit in \%} & \textbf{Buchstabe} & \textbf{Häufigkeit in \%}\\
+	\hline
+	a & 6.51 & n & 9.78\\
+	\hline
+	b & 1.89 & o & 2.51\\
+	\hline
+	c & 3.06 & p & 0.79\\
+	\hline
+	d & 5.08 & q & 0.02\\
+	\hline
+	e & 17.40 & r& 7.00\\
+	\hline
+	f & 1.66 & s & 7.27\\
+	\hline
+	g & 3.01 & t & 6.15\\
+	\hline
+	h & 4.76 & u & 4.35\\
+	\hline
+	i & 7.55 & v & 0.67\\
+	\hline
+	j & 0.27 & w & 1.89\\
+	\hline
+	k & 1.21 & x & 0.03\\
+	\hline
+	l & 3.44 & y & 0.04\\
+	\hline
+	m & 2.53 & z & 1.13\\
+	\hline
+\end{tabular}
+%\includegraphics[width=260pt,height=200pt]{buchstaben-haeufigkeit-deutsches-alphabet.jpg}
+\captionof{table}{Häufigkeit der Buchstaben in der deutschen Sprache \cite{Lindner2012}}
+\end{table}
+Dabei ist zu beachten, dass die Häufigkeitsanalyse aus mathematischen Gründen nur bei ausreichend langen Texten sicher funktioniert. In unserem Programm benötigt der eingegebene Text deshalb mindestens 26 Buchstaben.
 
 \newpage
 
@@ -162,27 +244,20 @@ Am Ende werden die ersten 30 Buchstaben des entschlüsselten Textes ausgegeben u
 Falls nicht, wird angenommen, dass der nächst häufigste Buchstabe das e war und der Text wird damit entschlüsselt. Das wird dreimal wiederholt, wenn dann kein richtiger Text gefunden wurde, kann angenommen werden, dass der eingegebene Text gar nicht Caesar-verschlüsselt war.\\
 Entsprechen die ersten 30 Buchstaben einem korrekten Text, wird der ganze entschlüsselte Text als string zurückgegeben.
 
-\subsubsection*{demonstration.cc}
+\subsubsection*{Demonstrationsfunktion: demo\_module() in der Datei demonstration.cc}
 
 Die Funktion demo\_module nimmt einen Text als Eingabe und zeigt einmal die Verschlüsselung und Entschlüsselung. Die Funktion dient nur zur einfacheren Präsentation des Programms.\\
 Auf den Text wird einmal die Funktion encrypt\_text angewendet und der verschlüsselte Text ausgegeben. Dann wird auf den verschlüsselten Text die Entschlüsselungsfunktion decrypt\_text angewendet und der Text wieder ausgegeben.
 
-\subsubsection*{format\_print.cc}
+\subsubsection*{Formatierungsfunktion: format\_for\_print() in der Datei format\_print.cc}
 
-Durch die Funktion format\_for\_print kann die Ausgabe von Texten schöner dargestellt werden.
+Durch die Funktion format\_for\_print kann die Ausgabe von Texten in der Konsole schöner dargestellt werden. Das erleichtert die Nutzung auch bei kleineren Konsolenfenstern.
 
 \subsubsection*{main\_program.cc}
 
-Das main\_programm ist als einzige Datei zur Ausführung gedacht. Beim Ausführen wird abgefragt, welche der vier Optionen Verschlüsseln, Entschlüsseln eines Textes, Demonstration der Funktionen oder Beenden des Programms gewählt werden soll. 
+Das main\_programm ist als einzige Datei zur Ausführung gedacht. Beim Ausführen wird abgefragt, welche der vier Optionen Verschlüsseln, Entschlüsseln eines Textes, Demonstration der Funktionen oder Beenden des Programms gewählt werden soll. Damit wird hier der gesamte Programmablauf koordiniert, die eigentliche Logik passiert aber an einer anderen Stelle.
 
 \newpage
-\subsection*{Quellen:}
-
-23.06.21, Beispiel c=3: \\
-\url{https://www.ionos.de/digitalguide/fileadmin/DigitalGuide/Screenshots/caesar-verschluesselung.png}\\
-27.07.21, Ascii Alphabet: \\
-\url{https://www.braingle.com/brainteasers/codes/images/ascii.png}\\
-23.06.21, Tabelle: \\
-\url{https://www.seo-woman.de/bilder/2012/buchstaben-haeufigkeit-deutsches-alphabet.jpg}\\
- 
+\listoftables
+\printbibliography
 \end{document} 

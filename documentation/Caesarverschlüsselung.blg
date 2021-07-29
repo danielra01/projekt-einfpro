@@ -1,0 +1,19 @@
+[0] Config.pm:304> INFO - This is Biber 2.14 (beta)
+[0] Config.pm:307> INFO - Logfile is 'CaesarverschlÃ¼sselung.blg'
+[57] biber:322> INFO - === Do Jul 29, 2021, 23:57:06
+[146] Biber.pm:415> INFO - Reading './Caesarverschlüsselung.bcf'
+[199] Biber.pm:943> INFO - Found 4 citekeys in bib section 0
+[208] Biber.pm:4256> INFO - Processing section 0
+[209] Utils.pm:75> INFO - Globbing data source 'literatur.bib'
+[209] Utils.pm:91> INFO - Globbed data source 'literatur.bib' to literatur.bib
+[217] Biber.pm:4455> INFO - Looking for bibtex format file 'literatur.bib' for section 0
+[217] bibtex.pm:1653> INFO - LaTeX decoding ...
+[222] bibtex.pm:1471> INFO - Found BibTeX data source 'literatur.bib'
+[254] Utils.pm:293> WARN - BibTeX subsystem: warning: comma(s) at end of name (removing)
+[262] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'variable = shifted' with 'variable = non-ignorable'
+[262] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[262] Biber.pm:4084> INFO - Sorting list 'anyt/global//global/global' of type 'entry' with template 'anyt' and locale 'de-DE'
+[262] Biber.pm:4090> INFO - No sort tailoring available for locale 'de-DE'
+[268] bbl.pm:652> INFO - Writing 'CaesarverschlÃ¼sselung.bbl' with encoding 'UTF-8'
+[270] bbl.pm:755> INFO - Output to CaesarverschlÃ¼sselung.bbl
+[270] Biber.pm:128> INFO - WARNINGS: 1

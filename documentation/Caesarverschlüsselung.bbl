@@ -1,0 +1,140 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{anyt/global//global/global}
+    \entry{Beutelspacher2007}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=4c68f34bf26b1e5ae34a9690300a5954}{%
+           family={Beutelspacher},
+           familyi={B\bibinitperiod},
+           given={Albrecht},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Vieweg}%
+      }
+      \strng{namehash}{4c68f34bf26b1e5ae34a9690300a5954}
+      \strng{fullhash}{4c68f34bf26b1e5ae34a9690300a5954}
+      \strng{bibnamehash}{4c68f34bf26b1e5ae34a9690300a5954}
+      \strng{authorbibnamehash}{4c68f34bf26b1e5ae34a9690300a5954}
+      \strng{authornamehash}{4c68f34bf26b1e5ae34a9690300a5954}
+      \strng{authorfullhash}{4c68f34bf26b1e5ae34a9690300a5954}
+      \field{labelalpha}{Beu07}
+      \field{sortinit}{B}
+      \field{sortinithash}{8de16967003c7207dae369d874f1456e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Kryptologie}
+      \field{title}{Cäsar oder Aller Anfang ist leicht!}
+      \field{year}{2007}
+      \field{pages}{1\bibrangedash 25}
+      \range{pages}{25}
+      \verb{doi}
+      \verb 10.1007/978-3-8348-9209-6_1
+      \endverb
+    \endentry
+    \entry{Lindner2012}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=9524687627e682406de262b0af11a08e}{%
+           family={Lindner},
+           familyi={L\bibinitperiod},
+           given={Alex},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{9524687627e682406de262b0af11a08e}
+      \strng{fullhash}{9524687627e682406de262b0af11a08e}
+      \strng{bibnamehash}{9524687627e682406de262b0af11a08e}
+      \strng{authorbibnamehash}{9524687627e682406de262b0af11a08e}
+      \strng{authornamehash}{9524687627e682406de262b0af11a08e}
+      \strng{authorfullhash}{9524687627e682406de262b0af11a08e}
+      \field{labelalpha}{Lin12}
+      \field{sortinit}{L}
+      \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{10}
+      \field{note}{Zugriff am 25.07.2021}
+      \field{title}{Geheimschrift und Codes » Kryptographie}
+      \field{year}{2012}
+      \verb{urlraw}
+      \verb https://www.seo-woman.de/bilder/2012/buchstaben-haeufigkeit-deutsches-alphabet.jpg
+      \endverb
+      \verb{url}
+      \verb https://www.seo-woman.de/bilder/2012/buchstaben-haeufigkeit-deutsches-alphabet.jpg
+      \endverb
+    \endentry
+    \entry{Olligs2003}{article}{}
+      \name{author}{1}{}{%
+        {{hash=95e13464d72e93a4efb507e9897b50a1}{%
+           family={Olligs},
+           familyi={O\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{95e13464d72e93a4efb507e9897b50a1}
+      \strng{fullhash}{95e13464d72e93a4efb507e9897b50a1}
+      \strng{bibnamehash}{95e13464d72e93a4efb507e9897b50a1}
+      \strng{authorbibnamehash}{95e13464d72e93a4efb507e9897b50a1}
+      \strng{authornamehash}{95e13464d72e93a4efb507e9897b50a1}
+      \strng{authorfullhash}{95e13464d72e93a4efb507e9897b50a1}
+      \field{labelalpha}{Oll03}
+      \field{sortinit}{O}
+      \field{sortinithash}{ff8d4eeb5101e3cf3809959b3592d942}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Kryptosysteme}
+      \field{title}{Mathematische Methoden der Analyse einfacher Kryptosysteme}
+      \field{year}{2003}
+      \field{pages}{3\bibrangedash 7}
+      \range{pages}{5}
+    \endentry
+    \entry{Roitzsch1993}{inbook}{}
+      \name{author}{1}{}{%
+        {{hash=763803b191923d8c982b4d059db9e9b1}{%
+           family={Roitzsch},
+           familyi={R\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Wiesbaden}%
+      }
+      \list{publisher}{1}{%
+        {Vieweg+Teubner Verlag}%
+      }
+      \strng{namehash}{763803b191923d8c982b4d059db9e9b1}
+      \strng{fullhash}{763803b191923d8c982b4d059db9e9b1}
+      \strng{bibnamehash}{763803b191923d8c982b4d059db9e9b1}
+      \strng{authorbibnamehash}{763803b191923d8c982b4d059db9e9b1}
+      \strng{authornamehash}{763803b191923d8c982b4d059db9e9b1}
+      \strng{authorfullhash}{763803b191923d8c982b4d059db9e9b1}
+      \field{labelalpha}{Roi93}
+      \field{sortinit}{R}
+      \field{sortinithash}{b9c68a358aea118dfa887b6e902414a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9783322878021}
+      \field{title}{COBOL - Das Handbuch für den professionellen Programmierer : Auf der Basis des ANSI-Standards unter Berücksichtigung der IBM-Erweiterungen unter VS COBOL II}
+      \field{year}{1993}
+      \field{pages}{595\bibrangedash 597}
+      \range{pages}{3}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
