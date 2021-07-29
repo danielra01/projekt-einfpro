@@ -131,5 +131,6 @@ int main() {
     if (logging) {
         std::cout << "LOG: Exiting...!" << std::endl;
     }
+    clear_console();
     return 0;
 }
