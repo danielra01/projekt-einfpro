@@ -10,6 +10,8 @@
 #include "encrypt.h"
 #include "decrypt.h"
 #include "global.h"
+#include "demonstration.h"
+#include "format_print.h"
 
 bool first_run = true;
 bool logging = false;
@@ -22,40 +24,20 @@ void clear_console() {
     }
 }
 
-
-void format_for_print(std::string text) {
-    if (cols > 0) {
-        int number_of_lines = floor(text.size() / cols);
-        for (int k = 1; k <= number_of_lines + 1; k++) {
-            std::string line = "# ";
-            int counter = 0;
-            for (int l = 0; l <= cols; l++) {
-                counter++;
-                if ((k-1)*cols+l < text.size()) {
-                    line = line + text[(k-1)*cols + l];
-                } else {
-                    for (int n = l; n <= cols; n++) {
-                        line = line + " ";
-                    }
-                    break;
-                }
-            }
-            std::cout << line <<  " #" << std::endl;
-        }
-    } else {
-        std::cout << text << std::endl;
-    }
-}
-
-
 void encrypt() {
     clear_console();
+    std::cout << "Bitte geben Sie einen zu verschlüsselnden Text ein\n >> ";
+    //Todo: Check for length
+    std::string mein_text;
+    std::cin.ignore();
+    getline(std::cin, mein_text);
+
     if (logging) {
         std::cout << "LOG: Starting encryption module..." << std::endl;
     }
     std::string encrypted;
     try {
-        encrypted = encrypt_text();
+        encrypted = encrypt_text(mein_text);
     } catch (const std::exception &e) {
         std::cout << e.what() << std::endl;
         encrypted = "";
@@ -63,7 +45,7 @@ void encrypt() {
     if (! (encrypted == "")) {
         clear_console();
         std::cout << "\n\n\n############################################ Verschlüsselter Text #############################################" << std::endl;
-        format_for_print(encrypted);
+        format_for_print(encrypted, cols);
         std::cout << "###############################################################################################################\n" << std::endl;
     }
 }
@@ -90,13 +72,14 @@ void decrypt() {
     if (! (decrypted == "")) {
         clear_console();
         std::cout << "############################################ Entschlüsselter Text #############################################" << std::endl;
-        format_for_print(decrypted);
+        format_for_print(decrypted, cols);
         std::cout << "###############################################################################################################\n" << std::endl;
     }
 }
 
 void demonstration() {
-    // TODO: Add a demonstration case for presentation
+    clear_console();
+    demo_module();
     if (logging) {
         std::cout << "LOG: Starting demo module..." << std::endl;
     }
@@ -126,11 +109,14 @@ int main() {
             std::cout << "#                                                                                                     |___/   #" << std::endl;
             std::cout << "#                                                                                                             #" << std::endl;
             std::cout << "#                                                            Copyright 2021 by Theresa Maurer & Daniel Rath   #" << std::endl;
+            std::cout << "###############################################################################################################" << std::endl;
             first_run = false;
+        } else {
+            std::cout << "#################################################### Menü #####################################################" << std::endl;
         }
 
-        std::cout << "###############################################################################################################" << std::endl;
-        std::cout << "#\t\tBitte ein Modul auswählen:                                                                            #\n#\t\t1. Verschlüsseln\t\t\t2. Entschlüsseln\t\t\t3. Demonstration\t\t\t4. Beenden\t\t  #\n#  [1,2,3,4] >> ";
+
+        std::cout << "#      Bitte ein Modul auswählen:                                                                             #\n#       1. Verschlüsseln             2. Entschlüsseln            3. Demonstration            4. Beenden       #\n#  [1,2,3,4] >> ";
         int choice;
         std::cin >> choice;
         // TODO: Add check for choice being an integer here
@@ -139,12 +125,12 @@ int main() {
             case 2: decrypt(); break;
             case 3: demonstration(); break;
             case 4: running = false; break;
-            // default: std::cout << "Please only enter one number to choose module!" << std::endl; break;
         }
     }
     // Logging
     if (logging) {
         std::cout << "LOG: Exiting...!" << std::endl;
     }
+    clear_console();
     return 0;
 }

@@ -1,5 +1,5 @@
 /* This file contains all the necessary code for encrypting a given text or
- * string for later trying to decrypt it
+ * string for later trying to decrypt it. Please use the main_programm file since this is only the logic
  */
 
 #include <iostream>
@@ -8,16 +8,10 @@
 #include <stdexcept>
 #include "global.h"
 
-
- std::string encrypt_text() {
-
-    std::cout << "Bitte geben Sie einen zu verschlüsselnden Text ein\n >> ";
-    std::string mein_text;
-    std::cin.ignore();
-    getline(std::cin, mein_text);
+ std::string encrypt_text(std::string mein_text) {
 
     if (mein_text.length() <= 25) {
-        // std::cout << "Bitte einen längeren Text eingeben" << std::endl;
+        //std::cout << "Bitte einen längeren Text eingeben" << std::endl;
         throw std::invalid_argument( "FEHLER: Bitte mindestens 26 Symbole eingeben!" );
     }
 
@@ -44,11 +38,6 @@
         //std::cout << "Now removing all \"Umlaute\"" << std::endl;
     }
 
-    /*
-    std::string text_to_encrypt;
-    for (int i = 0; i < mein_text.size(); i++) {
-        std::cout << mein_text[i] << std::endl;
-    }*/
 
     // Start encryption of every character in the string by iterating over them
     // Calculate difference

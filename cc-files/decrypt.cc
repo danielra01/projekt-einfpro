@@ -1,11 +1,11 @@
 /* This file is used for the decryption of any ceasar-encrypted text. Please
- * use the gui file since this is only the logic
+ * use the main_programm file since this is only the logic
  */
 
 #include <iostream>
 #include <string>
 #include <queue>
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
 #include <utility>
 #include <stdexcept>
 #include "global.h"
@@ -13,7 +13,7 @@
 std::string decrypt_text(std::string text_to_decrypt) {
     // Check for new e by looking for letter with highest occurrence
     // Therefore creating a PriorityQueue
-    if (text_to_decrypt.size() <= 1) {
+    if (text_to_decrypt.size() <= 25) {
         throw std::invalid_argument( "FEHLER: Bitte einen längeren Text eingeben!" );
     }
     std::priority_queue<std::pair<int, char>> char_queue;
@@ -30,7 +30,7 @@ std::string decrypt_text(std::string text_to_decrypt) {
     }
 
     // Now calculate the difference between the e and the most occurring letter
-    for (int i = 0; i <= 3; i++) {
+    for (int i = 1; i <= 3; i++) {
         char new_e_char = std::get<1>(char_queue.top());
         if (logging) {
             std::cout << "LOG: Identified " << new_e_char << " as new e" << std::endl;
@@ -52,7 +52,7 @@ std::string decrypt_text(std::string text_to_decrypt) {
         }
 
         // Check if this is correct
-        std::cout << "Mögliche Lösung: " << result.substr(0,20) << "\nIst das ein korrekter Text?\n [j,n] >> ";
+        std::cout << "Mögliche Lösung: " << result.substr(0,30) << "..."    << "\nIst das ein korrekter Text?\n [j,n] >> ";
         std::string correct;
         std::cin >> correct;
         if (correct == "j") {
