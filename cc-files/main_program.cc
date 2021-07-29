@@ -11,6 +11,7 @@
 #include "decrypt.h"
 #include "global.h"
 #include "demonstration.h"
+#include "format_print.h"
 
 bool first_run = true;
 bool logging = false;
@@ -22,32 +23,6 @@ void clear_console() {
         std::cout << "" << std::endl;
     }
 }
-
-
-void format_for_print(std::string text) {
-    if (cols > 0) {
-        int number_of_lines = floor(text.size() / cols);
-        for (int k = 1; k <= number_of_lines + 1; k++) {
-            std::string line = "# ";
-            int counter = 0;
-            for (int l = 0; l <= cols; l++) {
-                counter++;
-                if ((k-1)*cols+l < text.size()) {
-                    line = line + text[(k-1)*cols + l];
-                } else {
-                    for (int n = l; n <= cols; n++) {
-                        line = line + " ";
-                    }
-                    break;
-                }
-            }
-            std::cout << line <<  " #" << std::endl;
-        }
-    } else {
-        std::cout << text << std::endl;
-    }
-}
-
 
 void encrypt() {
     clear_console();
@@ -70,7 +45,7 @@ void encrypt() {
     if (! (encrypted == "")) {
         clear_console();
         std::cout << "\n\n\n############################################ Verschlüsselter Text #############################################" << std::endl;
-        format_for_print(encrypted);
+        format_for_print(encrypted, cols);
         std::cout << "###############################################################################################################\n" << std::endl;
     }
 }
@@ -97,7 +72,7 @@ void decrypt() {
     if (! (decrypted == "")) {
         clear_console();
         std::cout << "############################################ Entschlüsselter Text #############################################" << std::endl;
-        format_for_print(decrypted);
+        format_for_print(decrypted, cols);
         std::cout << "###############################################################################################################\n" << std::endl;
     }
 }
@@ -134,10 +109,13 @@ int main() {
             std::cout << "#                                                                                                     |___/   #" << std::endl;
             std::cout << "#                                                                                                             #" << std::endl;
             std::cout << "#                                                            Copyright 2021 by Theresa Maurer & Daniel Rath   #" << std::endl;
+            std::cout << "###############################################################################################################" << std::endl;
             first_run = false;
+        } else {
+            std::cout << "#################################################### Menü #####################################################" << std::endl;
         }
 
-        std::cout << "###############################################################################################################" << std::endl;
+
         std::cout << "#      Bitte ein Modul auswählen:                                                                             #\n#       1. Verschlüsseln             2. Entschlüsseln            3. Demonstration            4. Beenden       #\n#  [1,2,3,4] >> ";
         int choice;
         std::cin >> choice;
