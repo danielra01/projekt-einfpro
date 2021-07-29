@@ -13,6 +13,14 @@
 std::string decrypt_text(std::string text_to_decrypt) {
     // Check for new e by looking for letter with highest occurrence
     // Therefore creating a PriorityQueue
+
+    // Check that input doesn't contain any upper case letters
+    for (int u = 0; u < text_to_decrypt.size(); u++) {
+        if (((int)text_to_decrypt[u] > 64 ) && ((int)text_to_decrypt[u] < 91 )) {
+            text_to_decrypt[u] = (char) ((int)text_to_decrypt[u] + 32);  // +32 in ascii converts to lower case
+        }
+    }
+
     if (text_to_decrypt.size() <= 25) {
         throw std::invalid_argument( "FEHLER: Bitte einen längeren Text eingeben!" );
     }
@@ -29,11 +37,11 @@ std::string decrypt_text(std::string text_to_decrypt) {
         char_queue.push(std::make_pair(counter, current_char));
     }
 
-    // Now calculate the difference between the e and the most occurring letter
+    // Now calculate the difference between the e the most occurring letter
     for (int i = 1; i <= 3; i++) {
         char new_e_char = std::get<1>(char_queue.top());
         if (logging) {
-            std::cout << "LOG: Identified " << new_e_char << " as new e" << std::endl;
+            std::cout << "LOG: Possibly identified " << new_e_char << " as new e" << std::endl;
         }
 
         int new_e_int = (int) new_e_char;
