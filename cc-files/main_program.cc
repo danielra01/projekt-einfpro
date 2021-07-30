@@ -27,7 +27,6 @@ void clear_console() {
 void encrypt() {
     clear_console();
     std::cout << "Bitte geben Sie einen zu verschlüsselnden Text ein\n >> ";
-    //Todo: Check for length
     std::string mein_text;
     std::cin.ignore();
     getline(std::cin, mein_text);
@@ -55,7 +54,6 @@ void decrypt() {
         std::cout << "LOG: Starting decryption module..." << std::endl;
     }
     clear_console();
-    std::cout << "\n\n\n\n";
     std::cout << "Bitte den zu entschlüsselnden Text eigeben\n >> ";
     std::string text_for_decryption;
     std::cin.ignore();
@@ -79,7 +77,12 @@ void decrypt() {
 
 void demonstration() {
     clear_console();
-    demo_module();
+    try {
+        demo_module();
+    } catch (const std::invalid_argument &e) {
+        std::cout << e.what() << "\n\n" << std::endl;
+    }
+
     if (logging) {
         std::cout << "LOG: Starting demo module..." << std::endl;
     }
@@ -119,7 +122,6 @@ int main() {
         std::cout << "#      Bitte ein Modul auswählen:                                                                             #\n#       1. Verschlüsseln             2. Entschlüsseln            3. Demonstration            4. Beenden       #\n#  [1,2,3,4] >> ";
         int choice;
         std::cin >> choice;
-        // TODO: Add check for choice being an integer here
         switch (choice) {
             case 1: encrypt(); break;
             case 2: decrypt(); break;
